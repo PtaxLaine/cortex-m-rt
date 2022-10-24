@@ -44,6 +44,16 @@ Reset:
   ldr r4,=0xffffffff
   mov lr,r4
 
+
+  # initialise the SP
+  ldr r0, =_stack_start
+  msr msp, r0
+
+  # initialise VTOR
+  ldr r0, =0xe000ed08
+  ldr r1, =__vector_table
+  str r1, [r0]
+
   # Run user pre-init code, which must be executed immediately after startup,
   # before the potentially time-consuming memory initialisation takes place.
   # Example use cases include disabling default watchdogs or enabling RAM.
